@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chief Card</title>
+    <style>
+        /* Общие стили */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden; /* Чтобы не было скролла, если списки закрыты */
+        }
+
+        /* Верхний блок */
+        header {
+            margin-top: 40px;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 300;
+            line-height: 1.5;
+            color: #e0e0e0;
+        }
+
+        .user-tag {
+            display: block;
+            color: #888;
+            margin-top: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Контейнер для списков */
+        .content-sections {
+            width: 90%;
+            max-width: 400px;
+        }
+
+        /* Стили аккордеона (выпадающих списков) */
+        details {
+            background: #111;
+            margin-bottom: 10px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        summary {
+            padding: 15px;
+            cursor: pointer;
+            list-style: none;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid transparent;
+        }
+
+        details[open] summary {
+            border-bottom: 1px solid #333;
+            color: #888;
+        }
+
+        .details-content {
+            padding: 15px;
+            font-size: 0.95rem;
+            color: #ccc;
+            line-height: 1.4;
+            background-color: #0a0a0a;
+        }
+
+        /* Нижний блок */
+        footer {
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+            color: #555;
+            letter-spacing: 0.5px;
+        }
+
+        /* Убираем стандартную стрелочку в некоторых браузерах */
+        summary::-webkit-details-marker {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Шеф — единичная личность.<br>
+        <span class="user-tag">Единый юз — @gloryforgore</span></h1>
+    </header>
+
+    <div class="content-sections">
+        <details>
+            <summary>Деятельность</summary>
+            <div class="details-content">
+                Исключительно коддинг. Исключительно законные цели.
+            </div>
+        </details>
+
+        <details>
+            <summary>Взаимодействие</summary>
+            <div class="details-content">
+                Принимаю заказы на любой код. Дешевый прайс. Открыт к неформальному общению.
+            </div>
+        </details>
+    </div>
+
+    <footer>
+        chief exclusive content ⌨️
+    </footer>
+
+    <script>
+        // Скрипт, чтобы при открытии одного списка закрывался другой (опционально)
+        const details = document.querySelectorAll("details");
+        details.forEach((targetDetail) => {
+            targetDetail.addEventListener("click", () => {
+                details.forEach((detail) => {
+                    if (detail !== targetDetail) {
+                        detail.removeAttribute("open");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
