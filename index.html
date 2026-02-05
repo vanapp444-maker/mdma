@@ -5,116 +5,153 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chief Card</title>
     <style>
-        /* Общие стили */
+        :root {
+            --bg-color: #050505;
+            --card-bg: #0c0c0c;
+            --border-color: #222;
+            --text-main: #ffffff;
+            --text-dim: #666;
+            --accent: #888;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            /* Радиальный градиент для объема */
+            background: radial-gradient(circle at center, #111 0%, #050505 100%);
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
             height: 100vh;
-            text-align: center;
-            overflow: hidden; /* Чтобы не было скролла, если списки закрыты */
+            overflow: hidden;
         }
 
-        /* Верхний блок */
+        /* Тонкая полоска сверху для стиля */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
         header {
-            margin-top: 40px;
-            padding: 0 20px;
+            margin-top: 60px;
+            padding: 0 25px;
+            z-index: 2;
         }
 
         h1 {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 300;
-            line-height: 1.5;
-            color: #e0e0e0;
+            letter-spacing: -0.5px;
+            line-height: 1.6;
         }
 
         .user-tag {
-            display: block;
-            color: #888;
-            margin-top: 10px;
+            display: inline-block;
+            margin-top: 15px;
+            padding: 5px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--accent);
             text-decoration: none;
-            font-weight: bold;
+            transition: 0.3s;
         }
 
-        /* Контейнер для списков */
+        .user-tag:hover {
+            background: #fff;
+            color: #000;
+        }
+
         .content-sections {
-            width: 90%;
-            max-width: 400px;
+            width: 85%;
+            max-width: 350px;
         }
 
-        /* Стили аккордеона (выпадающих списков) */
         details {
-            background: #111;
-            margin-bottom: 10px;
-            border: 1px solid #333;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            background: var(--card-bg);
+            margin-bottom: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px; /* Более острые углы для строгости */
+            transition: border 0.3s ease;
+        }
+
+        details[open] {
+            border-color: var(--accent);
         }
 
         summary {
-            padding: 15px;
+            padding: 18px;
             cursor: pointer;
             list-style: none;
-            font-weight: 500;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-            border-bottom: 1px solid transparent;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            transition: 0.3s;
         }
 
-        details[open] summary {
-            border-bottom: 1px solid #333;
-            color: #888;
+        summary:hover {
+            color: var(--text-main);
         }
 
         .details-content {
-            padding: 15px;
-            font-size: 0.95rem;
-            color: #ccc;
-            line-height: 1.4;
-            background-color: #0a0a0a;
-        }
-
-        /* Нижний блок */
-        footer {
-            margin-bottom: 30px;
+            padding: 0 18px 18px 18px;
             font-size: 0.85rem;
-            color: #555;
-            letter-spacing: 0.5px;
+            color: #aaa;
+            text-align: left;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 15px;
         }
 
-        /* Убираем стандартную стрелочку в некоторых браузерах */
-        summary::-webkit-details-marker {
-            display: none;
+        footer {
+            margin-bottom: 40px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #333;
+        }
+
+        /* Декоративный элемент "сетка" на фоне */
+        .grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(var(--border-color) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.03;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
+    <div class="grid"></div>
 
     <header>
         <h1>Шеф — единичная личность.<br>
-        <span class="user-tag">Единый юз — @gloryforgore</span></h1>
+        <a href="https://t.me/gloryforgore" class="user-tag">@gloryforgore</a></h1>
     </header>
 
     <div class="content-sections">
         <details>
             <summary>Деятельность</summary>
             <div class="details-content">
-                Исключительно коддинг. Исключительно законные цели.
+                > исключительно коддинг.<br>
+                > исключительно законные цели.
             </div>
         </details>
 
         <details>
             <summary>Взаимодействие</summary>
             <div class="details-content">
-                Принимаю заказы на любой код. Дешевый прайс. Открыт к неформальному общению.
+                принимаю заказы на любой код. дешевый прайс. открыт к неформальному общению.
             </div>
         </details>
     </div>
@@ -124,15 +161,16 @@
     </footer>
 
     <script>
-        // Скрипт, чтобы при открытии одного списка закрывался другой (опционально)
         const details = document.querySelectorAll("details");
         details.forEach((targetDetail) => {
-            targetDetail.addEventListener("click", () => {
-                details.forEach((detail) => {
-                    if (detail !== targetDetail) {
-                        detail.removeAttribute("open");
-                    }
-                });
+            targetDetail.addEventListener("toggle", () => {
+                if (targetDetail.open) {
+                    details.forEach((detail) => {
+                        if (detail !== targetDetail) {
+                            detail.removeAttribute("open");
+                        }
+                    });
+                }
             });
         });
     </script>
