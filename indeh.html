@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аркадий #WLW • Профиль</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap');
+
+        :root {
+            --accent: #00f0ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .profile-card {
+            width: 100%;
+            max-width: 480px;
+            background: #111111;
+            border-radius: 32px;
+            box-shadow: 0 30px 60px -15px rgba(0, 240, 255, 0.15),
+                        0 0 0 1px rgba(255,255,255,0.03) inset;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Градиентный блик сверху */
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 180px;
+            background: linear-gradient(180deg, rgba(0, 240, 255, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .avatar-container {
+            display: flex;
+            justify-content: center;
+            padding-top: 48px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .avatar {
+            width: 128px;
+            height: 128px;
+            background: #1f1f1f;
+            border: 6px solid #1f1f1f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 8px rgba(0, 240, 255, 0.15),
+                        0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar svg {
+            width: 72px;
+            height: 72px;
+            color: #666;
+        }
+
+        .nickname {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 32px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nickname span {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .section {
+            margin: 28px 24px;
+            background: #1a1a1a;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.04);
+            box-shadow: 0 10px 20px -10px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .header:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .arrow {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--accent);
+        }
+
+        .content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #151515;
+            position: relative;
+        }
+
+        .content-inner {
+            padding: 0 24px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section.active .content {
+            max-height: 400px; /* будет перезаписано JS под реальную высоту */
+        }
+
+        .section.active .content-inner {
+            padding: 24px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Тёмная расширяющаяся область за списком */
+        .content::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(0, 240, 255, 0.03), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+
+        .section.active .content::after {
+            opacity: 1;
+        }
+
+        .text {
+            color: #cccccc;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 13px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+
+        <!-- Аватар -->
+        <div class="avatar-container">
+            <div class="avatar">
+                <!-- Место для вашего фото. Замените SVG на <img> если нужно -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Никнейм -->
+        <h1 class="nickname">Аркадий <span>#WLW</span></h1>
+
+        <!-- Секция Деятельность -->
+        <div class="section" id="activity-section">
+            <div class="header" onclick="toggleSection('activity-section')">
+                <div class="header-title">Деятельность</div>
+                <svg class="arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
+                </svg>
+            </div>
+            <div class="content">
+                <div class="content-inner">
+                    <p class="text">
+                        Играю на гитаре, программирую на Python, JS, GDScript;<br>
+                        открыт к диалогу
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Секция Услуги -->
+        <div class="section" id="services-section">
+            <div class="header" onclick="toggleSection('services-section')">
+                <div class="header-title">Услуги</div>
+                <svg class="arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
+                </svg>
+            </div>
+            <div class="content">
+                <div class="content-inner">
+                    <p class="text">
+                        Создание программы любой сложности, написание музыки,<br>
+                        совместное авторство в геймдеве (Godot).<br><br>
+                        <strong style="color:#00f0ff;">Цены узнавайте у собственника страницы</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            © 2026 • Аркадий #WLW • Все права защищены
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            const content = section.querySelector('.content');
+            const isActive = section.classList.contains('active');
+
+            // Закрываем все остальные секции (если нужно)
+            document.querySelectorAll('.section').forEach(s => {
+                if (s !== section) {
+                    s.classList.remove('active');
+                    const c = s.querySelector('.content');
+                    if (c) c.style.maxHeight = '0px';
+                }
+            });
+
+            if (isActive) {
+                // Закрываем текущую
+                section.classList.remove('active');
+                content.style.maxHeight = '0px';
+            } else {
+                // Открываем текущую
+                section.classList.add('active');
+                
+                // Плавное раскрытие с реальной высотой
+                const inner = content.querySelector('.content-inner');
+                const height = inner.scrollHeight + 48; // + padding
+                content.style.maxHeight = height + 'px';
+            }
+        }
+
+        // Автоматически открываем первую секцию при загрузке (по желанию)
+        window.onload = () => {
+            const firstSection = document.getElementById('activity-section');
+            const content = firstSection.querySelector('.content');
+            const inner = content.querySelector('.content-inner');
+            
+            firstSection.classList.add('active');
+            const height = inner.scrollHeight + 48;
+            content.style.maxHeight = height + 'px';
+
+            // Красивая анимация появления карточки
+            const card = document.querySelector('.profile-card');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            setTimeout(() => {
+                card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+        };
+    </script>
+</body>
+</html>
